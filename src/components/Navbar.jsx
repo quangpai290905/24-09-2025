@@ -14,7 +14,7 @@ export default function Navbar() {
   return (
     <nav className="nav">
       {/* Logo hoặc tên app */}
-      <div className="brand">Redux Cart</div>
+      <div className="brand">Dương Việt Quang</div>
 
       {/* Viên hiển thị giỏ hàng */}
       <div

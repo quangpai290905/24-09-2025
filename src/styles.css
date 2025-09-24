@@ -1,250 +1,252 @@
-/* ---------- Theme tokens (Dark default) ---------- */
-:root {                                 /* Gốc biến CSS (mặc định dark mode) */
-  color-scheme: dark;                   /* Gợi ý cho browser, form/control theo dark */
-  --bg: #0b0c10;                        /* Màu nền tổng thể */
-  --bg-grad: radial-gradient(1200px 800px at 80% -10%, #1a2030 0%, transparent 40%); /* Vầng sáng nền */
-  --panel: #12141a;                     /* Nền khối (card/sidebar) */
-  --panel-2: #171a21;                   /* Nền khối phụ / nút phụ */
-  --text: #e6e8eb;                      /* Màu chữ mặc định */
-  --muted: #a7b0be;                     /* Màu chữ phụ / mô tả */
+/* ---------- Theme tokens (Light default) ---------- */
+:root { /* Gốc: khai báo biến CSS dùng toàn site */
+  color-scheme: light; /* Báo cho trình duyệt theme sáng (ảnh hưởng form, scrollbar…) */
+  --bg: #f7f7fb; /* Màu nền chính */
+  --bg-grad: radial-gradient(1200px 800px at 80% -10%, #e9eefc 0%, transparent 40%); /* Nền gradient nhẹ để tạo chiều sâu */
+  --panel: #ffffff; /* Màu panel/card */
+  --panel-2: #f4f6fb; /* Màu panel phụ (nút ghost, input…) */
+  --text: #0b0c10; /* Màu chữ chính */
+  --muted: #a7b0be; /* Màu chữ phụ/mô tả (phiên bản light tươi) */
 
-  --primary: #4f8cff;                   /* Màu chính (nút, badge) */
-  --primary-2: #3a6fe0;                 /* Màu chính đậm hơn (gradient) */
-  --danger: #ef4444;                    /* Màu cảnh báo (xóa, lỗi) */
-  --success: #22c55e;                   /* Màu thành công */
+  --primary: #4f8cff; /* Màu chính 1 (nút, badge…) */
+  --primary-2: #3a6fe0; /* Màu chính 2 (để blend gradient nút) */
+  --danger: #ef4444; /* Màu cảnh báo/xóa */
+  --success: #22c55e; /* Màu thành công */
 
-  --ring: 0 0 0 3px rgba(79,140,255,.25); /* Viền focus (a11y) */
-  --radius: 14px;                       /* Bo góc mặc định */
+  --ring: 0 0 0 3px rgba(79,140,255,.25); /* Shadow viền focus (focus-visible) */
+  --radius: 14px; /* Bo góc mặc định cho card/nút */
   --shadow: 0 6px 24px rgba(0,0,0,.25); /* Đổ bóng mặc định */
-  --border: 1px solid rgba(255,255,255,.08); /* Viền tinh tế */
-  --gap: 20px;                          /* Khoảng cách grid/gap mặc định */
+  --border: 1px solid rgba(255,255,255,.08); /* Viền mặc định (light: rất nhạt) */
+  --gap: 20px; /* Khoảng cách lưới chung */
+
+  /* Cố định bề ngang cột giỏ hàng */
+  --side-width: 440px; /* <— muốn rộng/hẹp hơn: đổi số này để sidebar luôn cố định */
 }
 
 /* ---------- Light mode ---------- */
-:root[data-theme="light"] {             /* Khi ép theme sáng bằng data-theme="light" */
-  color-scheme: light;                  /* Gợi ý cho browser dùng light */
-  --bg: #f7f7fb;                        /* Nền sáng */
-  --bg-grad: radial-gradient(1200px 800px at 80% -10%, #e9eefc 0%, transparent 40%); /* Vầng sáng nhẹ */
-  --panel: #ffffff;                     /* Panel sáng */
-  --panel-2: #f4f6fb;                   /* Panel phụ sáng */
-  --text: #0b0c10;                      /* Chữ tối */
-  --muted: #5b6575;                     /* Chữ phụ tối hơn */
+:root[data-theme="light"] { /* Cho phép ép theme sáng qua data-attr */
+  color-scheme: light; /* Như trên: biểu mẫu/scrollbar dùng mode sáng */
+  --bg: #f7f7fb; /* Gán lại biến để đảm bảo đồng nhất khi ép theme */
+  --bg-grad: radial-gradient(1200px 800px at 80% -10%, #e9eefc 0%, transparent 40%); /* Gradient nền */
+  --panel: #ffffff; /* Panel chính */
+  --panel-2: #f4f6fb; /* Panel phụ */
+  --text: #0b0c10; /* Chữ chính */
+  --muted: #5b6575; /* Chữ mờ hơn chút trong light ép */
 
-  --primary: #3b82f6;                   /* Màu chính kiểu light */
-  --primary-2: #2563eb;                 /* Đậm hơn */
-
-  --shadow: 0 6px 24px rgba(0,0,0,.08); /* Bóng nhẹ cho nền sáng */
-  --border: 1px solid rgba(0,0,0,.08);  /* Viền nhẹ */
-}
-
-/* ---------- Auto match OS theme ---------- */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme]) {             /* Nếu KHÔNG đặt data-theme -> theo OS */
-    color-scheme: light;
-    --bg: #f7f7fb;
-    --bg-grad: radial-gradient(1200px 800px at 80% -10%, #e9eefc 0%, transparent 40%);
-    --panel: #ffffff;
-    --panel-2: #f4f6fb;
-    --text: #0b0c10;
-    --muted: #5b6575;
-
-    --primary: #3b82f6;
-    --primary-2: #2563eb;
-
-    --shadow: 0 6px 24px rgba(0,0,0,.08);
-    --border: 1px solid rgba(0,0,0,.08);
-  }
+  --primary: #3b82f6; /* Màu chính thay thể khi ép theme */
+  --primary-2: #2563eb; /* Màu chính 2 */
+  --shadow: 0 6px 24px rgba(0,0,0,.08); /* Đổ bóng nhẹ hơn ở light */
+  --border: 1px solid rgba(0,0,0,.08); /* Viền tối hơn chút trong light */
 }
 
 /* ---------- Reduced motion ---------- */
-@media (prefers-reduced-motion: reduce){
-  * { animation: none !important; transition: none !important; }  /* Tắt chuyển động vì a11y */
+@media (prefers-reduced-motion: reduce){ /* Tôn trọng người dùng hạn chế chuyển động */
+  * { animation: none !important; transition: none !important; } /* Tắt animation/transition */
 }
 
 /* ---------- Base ---------- */
-* { box-sizing: border-box; }           /* Tính width/height gồm padding/border */
-html, body, #root { height: 100%; }     /* Container gốc full chiều cao */
+* { box-sizing: border-box; } /* Tính kích thước gồm cả padding/border (dễ layout) */
+html, body, #root { height: 100%; } /* Kéo full-height cho root app */
 body {
-  margin: 0;                            /* Xóa margin mặc định */
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; /* Font stack hệ thống */
-  color: var(--text);                   /* Màu chữ mặc định */
-  background: var(--bg-grad), var(--bg);/* Nền = gradient + màu nền */
+  margin: 0; /* Xóa margin mặc định */
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji"; /* Font stack hiện đại */
+  color: var(--text); /* Màu chữ mặc định */
+  background: var(--bg-grad), var(--bg); /* Nền = gradient phủ trên màu nền */
 }
 
 /* ---------- Scrollbar (WebKit) ---------- */
-*::-webkit-scrollbar { height:10px; width:10px; }                /* Kích thước scrollbar */
-*::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 999px; } /* Tay cầm cuộn */
-*::-webkit-scrollbar-track { background: transparent; }          /* Rãnh cuộn */
+*::-webkit-scrollbar { height:10px; width:10px; } /* Kích thước scrollbar (Chrome/Safari) */
+*::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 999px; } /* Nút kéo scrollbar bo tròn */
+*::-webkit-scrollbar-track { background: transparent; } /* Nền track scrollbar trong suốt */
 
 /* ---------- Layout ---------- */
-.container {                           /* Khối bọc nội dung chính */
-  max-width: 1100px;                   /* Giới hạn chiều rộng */
-  margin-inline: auto;                 /* Canh giữa theo chiều ngang */
-  padding: 20px;                       /* Khoảng đệm */
+.container {
+  /* tăng tổng bề ngang để 2 cột thoáng hơn (tuỳ thích) */
+  max-width: 1240px; /* Chiều rộng tối đa khối nội dung (desktop) */
+  margin-inline: auto; /* Căn giữa theo trục ngang */
+  padding: 20px; /* Khoảng cách trong container */
 }
-.grid {                                /* Layout 2 cột: danh sách & giỏ hàng */
-  display: grid;
-  grid-template-columns: 2fr 1fr;      /* Cột trái rộng gấp đôi cột phải */
-  gap: var(--gap);                     /* Khoảng cách 2 cột */
+
+.grid {
+  display: grid; /* Dùng CSS Grid cho layout 2 cột */
+  /* Cột trái linh hoạt, cột phải CỐ ĐỊNH theo --side-width */
+  grid-template-columns: minmax(0, 1fr) var(--side-width); /* Trái co giãn, phải cố định */
+  gap: var(--gap); /* Khoảng cách giữa 2 cột */
 }
 @media (max-width: 900px){
-  .grid { grid-template-columns: 1fr; }/* Mobile: chuyển về 1 cột */
+  .grid { grid-template-columns: 1fr; } /* Mobile/tablet: chuyển 1 cột */
 }
 
 /* ---------- Navbar ---------- */
-.nav {                                 /* Thanh điều hướng trên cùng */
-  position: sticky; top: 0; z-index: 10; /* Dính trên cùng khi cuộn */
-  display: flex; align-items: center; justify-content: space-between; /* Căn giữa & tách 2 đầu */
-  padding: 14px 20px;                  /* Khoảng đệm */
-  background: color-mix(in hsl, var(--panel) 70%, transparent); /* Panel mờ */
-  backdrop-filter: blur(10px);         /* Làm mờ nền phía sau (glass) */
-  border-bottom: var(--border);        /* Viền dưới */
+.nav {
+  position: sticky; top: 0; z-index: 10; /* Bám trên cùng khi scroll */
+  display: flex; align-items: center; justify-content: space-between; /* Canh giữa dọc, 2 đầu ngang */
+  padding: 14px 20px; /* Đệm trong thanh nav */
+  background: color-mix(in hsl, var(--panel) 70%, transparent); /* Panel bán trong suốt tạo kính mờ */
+  backdrop-filter: blur(10px); /* Hiệu ứng mờ nền phía sau (glassmorphism) */
+  border-bottom: var(--border); /* Đường viền dưới nhẹ */
 }
-.brand { font-weight: 800; letter-spacing: .5px; } /* Logo chữ đậm & tracking */
-.cart-pill {                           /* Viên đếm giỏ */
-  display: inline-flex; align-items: center; gap: 8px; /* Nằm ngang, khoảng cách icon/số */
-  background: var(--panel-2); border: var(--border);   /* Nền & viền */
-  padding: 8px 12px; border-radius: 999px; box-shadow: var(--shadow); /* Tròn & đổ bóng */
+.brand { font-weight: 800; letter-spacing: .5px; } /* Logo/brand đậm, spacing nhẹ */
+.cart-pill {
+  display: inline-flex; align-items: center; gap: 8px; /* Viên đếm giỏ: canh giữa & gap icon/label */
+  background: var(--panel-2); border: var(--border); /* Nền nhạt + viền */
+  padding: 8px 12px; border-radius: 999px; box-shadow: var(--shadow); /* Viên bo tròn + đổ bóng */
 }
-.badge {                               /* Bóng đếm */
-  min-width: 24px; height: 24px; padding: 0 6px; /* Kích thước tối thiểu */
-  display: grid; place-content: center; /* Căn giữa số */
-  border-radius: 999px; background: var(--primary); color: #fff; font-weight: 700; /* Nền xanh, chữ trắng */
+.badge {
+  min-width: 24px; height: 24px; padding: 0 6px; /* Kích thước badge */
+  display: grid; place-content: center; /* Căn giữa số lượng */
+  border-radius: 999px; background: var(--primary); color: #fff; font-weight: 700; /* Nền primary, chữ trắng, đậm */
 }
 
 /* ---------- Sections & Cards ---------- */
-.section-title { margin: 6px 0 14px; font-size: 20px; font-weight: 700; } /* Tiêu đề “Sản phẩm” */
+.section-title { margin: 6px 0 14px; font-size: 20px; font-weight: 700; } /* Tiêu đề khu vực (Giỏ hàng, Danh sách sp) */
 
-/* Danh sách sản phẩm hiển thị ngang có kéo (giống carousel nhẹ) */
+/* Products: FLEX-WRAP (3 items / row on desktop) */
 .products{
-  display: flex;                       /* Xếp thẻ theo hàng ngang */
-  gap: var(--gap);                     /* Khoảng cách giữa các card */
-  overflow-x: auto;                    /* Kéo ngang khi tràn */
-  padding-bottom: 8px;                 /* Tạo khoảng cho scrollbar */
-  scroll-snap-type: x mandatory;       /* Kéo sẽ “dính” vào từng card */
+  display: flex; /* Dùng flex cho danh sách sản phẩm */
+  flex-wrap: wrap; /* Cho phép xuống dòng khi thiếu chỗ */
+  gap: var(--gap); /* Khoảng cách giữa card */
+  padding-bottom: 8px; /* Đệm dưới */
 }
-.products::-webkit-scrollbar{ height: 10px; } /* Thanh cuộn ngang mảnh */
+.products::-webkit-scrollbar{ height: 10px; } /* Nếu overflow theo trục ngang, scrollbar cao 10px */
 
-.card{                                  /* Thẻ sản phẩm */
-  background: var(--panel); border: var(--border); /* Nền & viền */
-  border-radius: var(--radius); box-shadow: var(--shadow); /* Bo góc & bóng */
-  padding: 12px; display: flex; flex-direction: column; gap: 10px; /* Layout dọc */
+.card{
+  background: var(--panel); border: var(--border); /* Nền card và viền */
+  border-radius: var(--radius); box-shadow: var(--shadow); /* Bo góc + bóng */
+  padding: 12px; display: flex; flex-direction: column; gap: 10px; /* Bố cục dọc trong card */
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; /* Hover mượt */
-  flex: 0 0 220px;                      /* Rộng cố định để xếp ngang đẹp */
-  scroll-snap-align: start;             /* Mốc bám khi kéo */
+
+  flex: 0 0 calc(33.333% - var(--gap)); /* 3 cột trên desktop (trừ gap) */
+  max-width: calc(33.333% - var(--gap)); /* Chặn max để giữ 3 cột ổn định */
 }
-.card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.18); } /* Nổi nhẹ khi hover */
-.card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; background: #0f1220; } /* Ảnh vuông */
-.card .title { font-weight: 700; margin: 2px 0 0; } /* Tên sản phẩm */
-.muted { color: var(--muted); font-size: 14px; }     /* Chữ mô tả nhạt */
-.price { font-weight: 800; }                          /* Giá đậm */
+.card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,.18); } /* Nhấc card nhẹ khi hover */
+.card img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; background: #0f1220; } /* Ảnh vuông, crop đẹp, bo góc */
+.card .title { font-weight: 700; margin: 2px 0 0; } /* Tên sp đậm, margin trên nhỏ */
+.muted { color: var(--muted); font-size: 14px; } /* Chữ phụ */
+.price { font-weight: 800; } /* Giá đậm */
+
+@media (max-width: 900px){
+  .card{ flex: 0 0 calc(50% - var(--gap)); max-width: calc(50% - var(--gap)); } /* Tablet: 2 cột */
+}
+@media (max-width: 600px){
+  .card{ flex: 0 0 100%; max-width: 100%; } /* Mobile: 1 cột */
+}
 
 /* ---------- Buttons & Inputs ---------- */
-.btn {                                   /* Nút chung */
-  appearance: none; border: none; outline: none;     /* Gỡ style mặc định */
-  padding: 10px 12px; border-radius: 12px; font-weight: 600; cursor: pointer; /* Hình dáng & cảm giác */
-  background: var(--panel-2); color: var(--text); border: var(--border);      /* Nền & viền */
-  transition: transform .08s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease; /* Hiệu ứng */
+.btn {
+  appearance: none; border: none; outline: none; /* Reset mặc định nút */
+  padding: 10px 12px; border-radius: 12px; font-weight: 600; cursor: pointer; /* Kích thước & style cơ bản */
+  background: var(--panel-2); color: var(--text); border: var(--border); /* Nền nhạt, chữ tối, viền */
+  transition: transform .08s ease, background .16s ease, border-color .16s ease, box-shadow .16s ease; /* Hiệu ứng bấm/hover/focus */
 }
-.btn:hover { background: #1c2331; border-color: rgba(255,255,255,.2); } /* Hover trong dark */
-:root[data-theme="light"] .btn:hover { background: #eef1f7; }           /* Hover trong light */
-.btn:active { transform: translateY(1px); }                              /* Nhấn xuống */
-.btn:focus-visible { box-shadow: var(--ring); border-color: transparent; } /* Vòng sáng focus a11y */
+.btn:hover { background: #eef1f7; border-color: rgba(0,0,0,.12); } /* Hover trong light: nền sáng hơn, viền rõ hơn */
+.btn:active { transform: translateY(1px); } /* Ấn nút hạ xuống 1px (feedback) */
+.btn:focus-visible { box-shadow: var(--ring); border-color: transparent; } /* Vòng sáng khi focus bằng bàn phím */
 
-.btn-primary {                            /* Nút chính (thêm vào giỏ / thanh toán) */
-  background: linear-gradient(180deg, var(--primary), var(--primary-2)); color: #fff; border: none;
+.btn-primary {
+  background: linear-gradient(180deg, var(--primary), var(--primary-2)); color: #fff; border: none; /* Nút chính gradient + chữ trắng */
 }
-.btn-primary:hover { filter: brightness(1.05); box-shadow: 0 8px 28px rgba(79,140,255,.25); } /* Sáng hơn khi hover */
+.btn-primary:hover { filter: brightness(1.05); box-shadow: 0 8px 28px rgba(79,140,255,.25); } /* Sáng hơn + bóng đậm khi hover */
 
-.btn-ghost { background: transparent; border: var(--border); } /* Nút viền mảnh */
-.btn-danger {                              /* Nút màu đỏ (xóa giỏ) */
-  background: linear-gradient(180deg, #ef5350, #e53935);
-  color: #fff; border: none;
-}
+.btn-ghost { background: transparent; border: var(--border); } /* Nút trong suốt, chỉ có viền */
+.btn-danger { background: linear-gradient(180deg, #ef5350, #e53935); color: #fff; border: none; } /* Nút xóa màu đỏ gradient */
 
 /* ---------- Qty group ---------- */
-.qty { display: flex; align-items: center; gap: 8px; } /* Nhóm số lượng (wrap input) */
-.qty input {                             /* Ô nhập số lượng */
-  width: 58px; height: 36px; border-radius: 10px; border: var(--border);
-  background: var(--panel-2); color: var(--text);
-  text-align: center; font-weight: 700; outline: none;
+.qty { display: flex; align-items: center; gap: 8px; } /* Nhóm số lượng: nút +/- và input canh giữa */
+.qty input {
+  width: 58px; height: 36px; border-radius: 10px; border: var(--border); /* Kích thước & bo góc input số lượng */
+  background: var(--panel-2); color: var(--text); /* Nền nhạt, chữ tối */
+  text-align: center; font-weight: 700; outline: none; /* Căn giữa số, đậm, bỏ outline mặc định */
 }
-.qty input:focus { box-shadow: var(--ring); border-color: transparent; } /* Focus đẹp */
+.qty input:focus { box-shadow: var(--ring); border-color: transparent; } /* Focus ring đẹp */
 
 /* ---------- Cart (sidebar) ---------- */
-.sidebar {                               /* Khối giỏ hàng bên phải */
-  position: sticky; top: 18px;          /* Dính khi cuộn */
-  background: var(--panel); border: var(--border);
-  border-radius: var(--radius); box-shadow: var(--shadow);
-  padding: 16px; height: fit-content;   /* Bọc gọn nội dung */
-}
-.cart-line {                             /* Một dòng sản phẩm trong giỏ */
-  display: grid;
-  grid-template-columns: 64px 1fr auto; /* Ảnh | thông tin | tổng tiền */
-  gap: 12px; align-items: center;
-  padding: 10px 0; border-bottom: var(--border);
-}
-.cart-line:last-child { border-bottom: none; } /* Dòng cuối không kẻ */
-.cart-thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; background: #0f1220; } /* Ảnh nhỏ */
+.sidebar {
+  position: sticky; top: 18px; /* Bám màn hình cách top 18px khi cuộn */
+  background: var(--panel); border: var(--border); /* Nền panel + viền */
+  border-radius: var(--radius); box-shadow: var(--shadow); /* Bo góc + bóng */
+  padding: 16px; height: fit-content; /* Đệm trong; cao theo nội dung */
 
-/* Giá ở mỗi dòng giỏ hàng (bên phải) */
+  /* Khóa sidebar đúng bằng cột phải */
+  width: var(--side-width); /* Ngang sidebar luôn đúng bằng biến khung */
+  box-sizing: border-box; /* Tính padding vào width để không tràn */
+
+  /* Giữ chiều cao tối thiểu để lúc trống không bị co “nhìn nhỏ” */
+  min-height: 220px; /* Trạng thái trống vẫn đẹp, không quá thấp */
+}
+
+/* Khối danh sách trong giỏ (nếu có) */
+.cart-list { display: flex; flex-direction: column; gap: 0; } /* Danh sách item xếp dọc, không gap để dùng border chia dòng */
+
+/* Trạng thái giỏ trống (tuỳ bạn dùng class này trong JSX) */
+.cart-empty {
+  display: grid; place-items: center; /* Căn giữa nội dung “Chưa có sản phẩm” */
+  padding: 24px 8px; color: var(--muted); font-weight: 600; /* Đệm + màu chữ mờ + hơi đậm */
+  border-radius: 10px; background: var(--panel-2); border: var(--border); /* Nền nhạt, bo góc, viền nhẹ */
+}
+
+.cart-line {
+  display: grid; /* Mỗi dòng giỏ hàng dùng grid để canh cột */
+  /* Khoá cột giá để không lấn ra ngoài khi số dài */
+  grid-template-columns: 64px 1fr 120px; /* Ảnh (64) | Thông tin (co giãn) | Giá (120) */
+  gap: 12px; align-items: center; /* Khoảng cách giữa cột, căn giữa dọc */
+  padding: 10px 0; border-bottom: var(--border); /* Đệm dọc + đường phân cách dòng */
+}
+.cart-line:last-child { border-bottom: none; } /* Dòng cuối bỏ border */
+
+.cart-thumb { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; background: #0f1220; } /* Ảnh thu nhỏ vuông, crop đẹp, bo góc */
+
 .line-right {
-  font-weight: 800;                      /* In đậm */
-  display: inline-flex; align-items: center; /* Dính “đ” cùng dòng số */
-  gap: 4px; white-space: nowrap;         /* Không xuống dòng */
-  text-align: right;                     /* Canh phải cột tổng tiền */
+  font-weight: 800; /* Số tiền đậm */
+  display: inline-flex; align-items: center; /* Căn giữa dọc icon/ký hiệu */
+  gap: 4px; white-space: nowrap; text-align: right; /* Không xuống dòng; canh phải */
 }
-.line-right .currency {                  /* Ký hiệu “đ” */
-  font-size: 0.95em; font-weight: 700; line-height: 1;
-}
+.line-right .currency { font-size: 0.95em; font-weight: 700; line-height: 1; } /* Ký hiệu tiền nhỏ hơn chút */
 
-/* Cụm nút: − [input] +  [Xóa] (trong phần info) */
+/* Cụm nút +/- và Xóa trong từng dòng */
 .cart-actions {
-  margin-top: 6px;
-  display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; /* Luôn nằm cùng hàng */
+  margin-top: 6px; /* Tạo khoảng cách với tên/giá */
+  display: flex; gap: 8px; align-items: center; flex-wrap: nowrap; /* Hàng ngang: -, input, +, Xóa */
 }
-.cart-actions .btn:not(.btn-ghost) {     /* Nút − và + (không ảnh hưởng nút Xóa kiểu ghost) */
-  min-width: 36px; height: 36px;
-  padding: 0; display: grid; place-items: center; /* Vuông & icon giữa */
+.cart-actions .btn:not(.btn-ghost) {
+  min-width: 36px; height: 36px; /* Nút vuông nhỏ (icon) */
+  padding: 0; display: grid; place-items: center; /* Căn icon giữa */
 }
 @media (max-width: 480px){
-  .cart-actions { flex-wrap: wrap; }     /* Màn nhỏ: cho phép xuống dòng để không vỡ layout */
+  .cart-actions { flex-wrap: wrap; } /* Màn nhỏ: cho phép xuống hàng để không chật */
 }
 
-/* Tổng tiền (footer của giỏ hàng) */
 .totals {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-top: 12px; font-weight: 700;
+  display: flex; justify-content: space-between; align-items: center; /* Tổng tiền: nhãn trái, giá phải */
+  margin-top: 12px; font-weight: 700; /* Cách trên và đậm */
 }
-.totals > :last-child {                  /* Cột số tiền tổng */
-  display: inline-flex; align-items: center;
-  gap: 4px; white-space: nowrap;         /* Dính “đ” cùng dòng */
+.totals > :last-child {
+  display: inline-flex; align-items: center; /* Căn giữa dọc giá + ký hiệu */
+  gap: 4px; white-space: nowrap; /* Không xuống dòng */
 }
-.totals > :last-child .currency {
-  font-size: 0.95em; font-weight: 700; line-height: 1;
-}
+.totals > :last-child .currency { font-size: 0.95em; font-weight: 700; line-height: 1; } /* Ký hiệu tiền nhỏ gọn */
 
-.stack { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; } /* Cột dọc giữa các nút trong giỏ */
+.stack { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; } /* Nhóm các nút Thanh toán/Xóa giỏ theo cột */
 
-.hr { height: 1px; background: rgba(255,255,255,.08); margin: 8px 0; border: 0; } /* Đường kẻ nhạt */
-:root[data-theme="light"] .hr { background: rgba(0,0,0,.08); }                     /* Bản sáng */
+.hr { height: 1px; background: rgba(255,255,255,.08); margin: 8px 0; border: 0; } /* Đường kẻ mảnh phân khu */
+:root[data-theme="light"] .hr { background: rgba(0,0,0,.08); } /* Trong light ép: kẻ dùng màu tối nhẹ hơn */
 
 /* ---------- Utils ---------- */
-.sr-only {                                /* Ẩn label nhưng vẫn dành cho screen-reader (a11y) */
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; /* Thu nhỏ */
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; /* Ẩn khỏi mắt nhưng còn cho screen reader */
 }
 
 /* ---------- Add-to-cart animation ---------- */
-.flying-img {                             /* Ảnh bay vào giỏ (nếu bạn có script) */
-  position: fixed; width: 64px; height: 64px; object-fit: cover;
-  border-radius: 10px; pointer-events: none; z-index: 9999;
-  transition: transform .6s cubic-bezier(.22,1,.36,1), opacity .6s ease;
-  box-shadow: 0 10px 25px rgba(0,0,0,.35);
+.flying-img {
+  position: fixed; width: 64px; height: 64px; object-fit: cover; /* Ảnh bay cố định kích thước */
+  border-radius: 10px; pointer-events: none; z-index: 9999; /* Không bắt sự kiện, nổi trên cùng */
+  transition: transform .6s cubic-bezier(.22,1,.36,1), opacity .6s ease; /* Chuyển động mượt */
+  box-shadow: 0 10px 25px rgba(0,0,0,.35); /* Bóng khi bay */
 }
-.badge-pulse { animation: badge-pulse .5s ease; } /* Nhịp “phập phồng” cho badge giỏ */
+.badge-pulse { animation: badge-pulse .5s ease; } /* Hiệu ứng nhấp nháy badge khi thêm giỏ */
 @keyframes badge-pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.18); }
-  100% { transform: scale(1); }
+  0% { transform: scale(1); } /* Bắt đầu kích thước bình thường */
+  50% { transform: scale(1.18); } /* Phình ra giữa animation */
+  100% { transform: scale(1); } /* Trở về bình thường */
 }

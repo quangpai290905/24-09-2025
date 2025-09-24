@@ -1,37 +1,27 @@
 // src/App.jsx
-import Navbar from "./components/Navbar";
-import Cart from "./components/Cart";
-import ThemeToggle from "./components/ThemeToggle";
+import Navbar from "./components/Navbar.jsx"      // Import Navbar
+import Cart from "./components/Cart.jsx"          // Import Cart (giỏ hàng)
+import ProductList from "./components/Productlist.jsx"
 
-// ⛔ CHỌN 1 TRONG 2 DÒNG IMPORT SAU, cái nào khớp tên file thực tế của bạn thì giữ lại:
-// import ProductList from "./components/ProductList";   // nếu file là ProductList.jsx
-import ProductList from "./components/Productlist";      // nếu file là Productlist.jsx
 
 export default function App() {
   return (
-    <div>
-      {/* Thanh điều hướng (sticky) */}
+    <div className="app"> {/* Bao bọc toàn bộ ứng dụng */}
+      
+      {/* Thanh điều hướng luôn ở trên cùng */}
       <Navbar />
 
-      {/* Nút đổi theme nổi góc phải */}
-      <div
-        style={{
-          position: "fixed",
-          top: 12,
-          right: 16,
-          zIndex: 50,
-        }}
-      >
-        <ThemeToggle />
-      </div>
-
-      {/* Layout 2 cột: trái là danh sách sp, phải là giỏ hàng */}
-      <div className="container">
+      {/* Khu vực nội dung chính */}
+      <main className="container">
         <div className="grid">
+          
+          {/* Cột trái: hiển thị danh sách sản phẩm */}
           <ProductList />
+
+          {/* Cột phải: hiển thị giỏ hàng */}
           <Cart />
         </div>
-      </div>
+      </main>
     </div>
-  );
+  )
 }

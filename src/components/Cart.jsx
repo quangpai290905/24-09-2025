@@ -1,91 +1,85 @@
 // src/components/Cart.jsx
+
+// Import hook của react-redux
 import { useDispatch, useSelector } from "react-redux"; 
-//   import 2 hook của react-redux:
-// - useDispatch: gửi action lên Redux store
-// - useSelector: đọc dữ liệu từ Redux store
+//   useDispatch: gửi action lên Redux store
+//   useSelector: đọc dữ liệu từ Redux store
 
+// Import component con hiển thị từng sản phẩm trong giỏ
 import CartItem from "./CartItem"; 
-//   Component con để render từng sản phẩm trong giỏ
 
+// Import action xóa giỏ hàng từ slice
 import { clearCart } from "../redux/cart/cartSlice"; 
-//   Import action creator clearCart từ cartSlice để xóa toàn bộ giỏ hàng
 
+// Component Cart chính
 export default function Cart() {
   const dispatch = useDispatch(); 
-  //   Lấy hàm dispatch để gọi action (giống như store.dispatch)
+  //   Lấy hàm dispatch để gửi action lên Redux store
 
-  // Lấy danh sách item trong giỏ
-  const items = useSelector((state) => state.cart.items ?? []); 
-  //   Lấy state.cart.items từ Redux store
-  // Nếu items = null/undefined thì gán mặc định = []
+  // Lấy danh sách sản phẩm trong giỏ từ state Redux
+  // Nếu state.cart.items không có thì mặc định là []
+  const items = useSelector((state) => state.cart.items ?? []);
 
   // Tính tổng số lượng sản phẩm
   const totalQty = items.reduce((sum, it) => sum + (it.qty || 0), 0);
-  //   Duyệt qua từng item, cộng dồn số lượng (qty)
-  // Nếu qty null/undefined thì mặc định = 0
 
-  // Tính tổng số tiền
+  // Tính tổng tiền = tổng (số lượng * giá) của từng sản phẩm
   const totalPrice = items.reduce(
     (sum, it) => sum + (it.qty || 0) * (it.price || 0),
     0
   );
-  //   Duyệt qua từng item, tính (qty * price), cộng dồn vào sum
 
-  // Format số tiền sang VND
-  const formatVND = (value) =>
-    Number(value || 0).toLocaleString("vi-VN", { maximumFractionDigits: 0 });
-  //   Hàm chuyển số thành chuỗi có phân cách hàng nghìn
-  // Ví dụ: 1000000 -> "1.000.000"
+  // Hàm format số tiền theo VND (có dấu . ngăn cách hàng nghìn)
+  const formatVND = (n) =>
+    Number(n || 0).toLocaleString("vi-VN", { maximumFractionDigits: 0 });
 
   return (
-    <aside className="sidebar"> 
-      {/*   Thẻ aside hiển thị giỏ hàng, có class CSS "sidebar" */}
+    // Khối aside hiển thị giỏ hàng, áp dụng class CSS "sidebar"
+    <aside className="sidebar">
 
-      <h2 className="section-title">Giỏ hàng</h2> 
-      {/*   Tiêu đề giỏ hàng */}
+      {/* Header giỏ hàng + badge tổng số lượng */}
+      <div 
+        style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+      >
+        <h2 className="section-title" style={{ margin: 0 }}>Giỏ hàng</h2>
+        <span className="badge" title="Tổng số lượng">{totalQty}</span>
+      </div>
 
       {/* Danh sách sản phẩm trong giỏ */}
-      <div className="stack">
-        {items.length === 0 ? ( 
-          //  Nếu giỏ hàng rỗng
+      <div className="cart-list">
+        {items.length === 0 ? (
+          // Nếu giỏ rỗng thì hiển thị chữ "Chưa có sản phẩm."
           <div className="muted">Chưa có sản phẩm.</div>
-          //  Hiển thị chữ nhạt "Chưa có sản phẩm."
         ) : (
-          //  Nếu có sản phẩm
+          // Nếu có sản phẩm thì render ra từng CartItem
           items.map((item) => <CartItem key={item.id} item={item} />)
-          //  Render từng sản phẩm bằng CartItem
         )}
       </div>
 
-      {/* Tổng cộng */}
+      {/* Đường kẻ ngang phân cách phần list và footer */}
+      <hr className="hr" />
+
+      {/* Phần tổng cộng: số lượng và tổng tiền */}
       <div className="totals">
         <div>Tổng ({totalQty} SP)</div>
-        {/*  Hiển thị tổng số lượng sản phẩm trong giỏ */}
-
         <div>
           {formatVND(totalPrice)} <span className="currency">đ</span>
-          {/*  Hiển thị tổng giá trị giỏ hàng, format theo VND */}
         </div>
       </div>
 
-      {/* Hành động */}
+      {/* Các nút hành động: Thanh toán và Xóa giỏ */}
       <div className="stack">
         <button
           className="btn btn-primary"
-          disabled={items.length === 0}
-          //  Nếu giỏ rỗng thì disable nút
+          disabled={items.length === 0} // Nếu giỏ rỗng thì disable
           onClick={() => alert("Chức năng thanh toán đang phát triển 😅")}
-          //  Tạm thời chỉ alert, chưa có logic thanh toán
         >
           Thanh toán
         </button>
-
         <button
           className="btn btn-danger"
-          disabled={items.length === 0}
-          // Nếu giỏ rỗng thì disable nút
-          onClick={() => dispatch(clearCart())}
-          // khi bấm thì dispatch action clearCart để xóa giỏ
+          disabled={items.length === 0} // Nếu giỏ rỗng thì disable
+          onClick={() => dispatch(clearCart())} // Xóa toàn bộ giỏ hàng
         >
           Xóa giỏ
         </button>

@@ -1,38 +1,43 @@
 // src/redux/cart/cartSlice.jsx
-import { createSlice } from "@reduxjs/toolkit" 
-// 👉 import hàm createSlice để tạo reducer + action một cách ngắn gọn
 
-// State khởi tạo cho giỏ hàng
+// Import hàm createSlice từ Redux Toolkit
+// 👉 createSlice giúp định nghĩa state + reducer + action nhanh gọn, không cần viết switch-case dài dòng
+import { createSlice } from "@reduxjs/toolkit" 
+
+// ------------------- STATE KHỞI TẠO -------------------
+// Đây là trạng thái mặc định ban đầu của giỏ hàng
 const initialState = {
   items: [],        // Mảng sản phẩm trong giỏ [{id, name, price, image, qty}]
-  totalItems: 0,    // Tổng số lượng sản phẩm trong giỏ
-  totalPrice: 0,    // Tổng số tiền trong giỏ
+  totalItems: 0,    // Tổng số lượng sản phẩm (cộng tất cả qty)
+  totalPrice: 0,    // Tổng số tiền (cộng price * qty)
 }
 
-// Hàm tiện ích: tìm vị trí sản phẩm trong giỏ theo id
+// ------------------- HÀM TIỆN ÍCH -------------------
+// Tìm vị trí sản phẩm trong giỏ theo id, trả về index hoặc -1 nếu chưa có
 const findIndex = (state, id) => state.items.findIndex(i => i.id === id)
 
-// Tạo slice "cart" với reducers quản lý các hành động
+// ------------------- SLICE GIỎ HÀNG -------------------
 const cartSlice = createSlice({
-  name: "cart",          // Tên slice (state.cart)
+  name: "cart",          // Tên slice => state.cart
   initialState,          // State mặc định
   reducers: {
-    // Thêm sản phẩm vào giỏ (hoặc tăng số lượng nếu đã có)
+    // ✅ Thêm sản phẩm vào giỏ (nếu chưa có thì thêm mới, nếu có rồi thì +1)
     addToCart: (state, action) => {
       const { id, name, price, image } = action.payload
       const idx = findIndex(state, id)
       if (idx === -1) {
-        // Nếu sản phẩm chưa có -> thêm mới
+        // Nếu sản phẩm chưa có -> thêm mới với qty = 1
         state.items.push({ id, name, price, image, qty: 1 })
       } else {
-        // Nếu đã có -> tăng số lượng
+        // Nếu đã có -> tăng số lượng thêm 1
         state.items[idx].qty += 1
       }
+      // Cập nhật tổng số lượng và tổng tiền
       state.totalItems += 1
       state.totalPrice += price
     },
 
-    // Alias cho addToCart (giữ tên addItem nếu code cũ dùng)
+    // ✅ Alias cho addToCart (giữ lại nếu code cũ dùng addItem)
     addItem: (state, action) => {
       const { id, name, price, image } = action.payload
       const idx = findIndex(state, id)
@@ -45,7 +50,7 @@ const cartSlice = createSlice({
       state.totalPrice += price
     },
 
-    // Tăng số lượng 1 sản phẩm
+    // ✅ Tăng số lượng 1 sản phẩm trong giỏ theo id
     increase: (state, action) => {
       const id = action.payload
       const idx = findIndex(state, id)
@@ -56,7 +61,7 @@ const cartSlice = createSlice({
       }
     },
 
-    // Giảm số lượng 1 sản phẩm (không giảm dưới 1)
+    // ✅ Giảm số lượng 1 sản phẩm (chỉ giảm nếu qty > 1, không để về 0 ở đây)
     decrease: (state, action) => {
       const id = action.payload
       const idx = findIndex(state, id)
@@ -67,7 +72,7 @@ const cartSlice = createSlice({
       }
     },
 
-    // Đặt lại số lượng theo giá trị input
+    // ✅ Đặt lại số lượng sản phẩm theo input của user
     setQuantity: (state, action) => {
       const { id, qty } = action.payload
       const idx = findIndex(state, id)
@@ -80,19 +85,21 @@ const cartSlice = createSlice({
       }
     },
 
-    // Xóa 1 sản phẩm khỏi giỏ
+    // ✅ Xóa hoàn toàn 1 sản phẩm khỏi giỏ
     removeItem: (state, action) => {
       const id = action.payload
       const idx = findIndex(state, id)
       if (idx !== -1) {
         const removed = state.items[idx]
+        // Trừ đi số lượng và tiền tương ứng
         state.totalItems -= removed.qty
         state.totalPrice -= removed.qty * removed.price
-        state.items.splice(idx, 1) // xóa khỏi mảng
+        // Xóa khỏi mảng items
+        state.items.splice(idx, 1)
       }
     },
 
-    // Xóa toàn bộ giỏ hàng
+    // ✅ Xóa toàn bộ giỏ hàng (reset về mặc định)
     clearCart: (state) => {
       state.items = []
       state.totalItems = 0
@@ -101,7 +108,8 @@ const cartSlice = createSlice({
   },
 })
 
-// Export các action để dùng trong component
+// ------------------- EXPORT -------------------
+// Xuất action để gọi trong component
 export const {
   addToCart,
   addItem,
@@ -112,5 +120,5 @@ export const {
   clearCart,
 } = cartSlice.actions
 
-// Export reducer để khai báo trong store
+// Xuất reducer để khai báo trong store
 export default cartSlice.reducer
